@@ -1,14 +1,9 @@
 var system = require('system');
 var env = system.env;
 var pizzaUrl = env.PIZZA_URL;
-var zip = env.ZIP;
-
+//var zips = require(env.ZIPS);
+var Zips = require(env.ZIPS);
 console.log(pizzaUrl);
-console.log(zip);
-
-var logTime = function(name, part, whole) {
-  console.log(name + "time: " + part + ", Total: " + whole);
-}
 
 var resourcePatterns = [
   /dmtry/gi,
@@ -21,7 +16,6 @@ var resourcePatterns = [
   /conversion/gi,
   /adsrvr/gi,
   /fbds/gi];
-var start_all = new Date().getTime();
 var webPage = require('webpage');
 var page = webPage.create();
 page.settings.resourceTimeout = 900;
@@ -37,16 +31,10 @@ page.onResourceRequested = function(requestData, request) {
   });
 };
 
-var end_create = new Date().getTime();
-logTime("boot and create: ", end_create - start_all, end_create - start_all);
-
-
+Zips.zips.forEach(function(zip) {
   url = pizzaUrl + zip;
   console.log(url);
   page.open(url, function(status) {
-
-    var end_open = new Date().getTime();
-    logTime("open the page: ", end_open - end_create, end_open - start_all);
 
     if(status != 'success') {
       console.log("PROBLEMS");
@@ -67,9 +55,8 @@ logTime("boot and create: ", end_create - start_all, end_create - start_all);
         }
       });*/
     }, 800);
-
   });
-
+});
 
 
 
