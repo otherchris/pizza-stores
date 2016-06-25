@@ -40,10 +40,9 @@ page.onResourceRequested = function(requestData, request) {
 var end_create = new Date().getTime();
 logTime("boot and create: ", end_create - start_all, end_create - start_all);
 
-var zips = ['40204'];
 
-zips.forEach(function(zip) {
-  url = 'https://www.dominos.com/en/pages/order/#/locations/search/?type=Locations&c=' + zip;
+  url = pizzaUrl + zip;
+  console.log(url);
   page.open(url, function(status) {
 
     var end_open = new Date().getTime();
@@ -70,7 +69,6 @@ zips.forEach(function(zip) {
     }, 800);
 
   });
-});
 
 
 
