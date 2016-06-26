@@ -14,10 +14,13 @@ var resourcePatterns = [
   /channel/gi,
   /conversion/gi,
   /adsrvr/gi,
-  /fbds/gi];
+  /fbds/gi,
+  /utag/gi,
+]
+
 var webPage = require('webpage');
 var page = webPage.create();
-page.settings.resourceTimeout = 2000;
+page.settings.resourceTimeout = 800;
 page.onResourceTimeout = function(e) {
   console.log("Timeout: " + e.url);
 }
@@ -34,11 +37,18 @@ page.onResourceRequested = function(requestData, request) {
   console.log(url);
   page.open(url, function(status) {
     if(status != 'success') {
-      console.log("PROBLEMS");
+      console.log("RESET " + zip);
       phantom.exit();
     }
     window.setTimeout(function() {
-      console.log(page.plainText);
+      var str = page.plainText;
+      if (str.indexOf("PLEASE") >= 0) {
+        phantom.exit();
+      }
+      if (!(str.indexOf("STORE #") >= 0)) {
+        console.log("RESET " + zip);
+      }
+      console.log(str);
       phantom.exit();
       /*cont.content = page.content;
       var nodes = cont.evaluate(function(s) {
