@@ -15,12 +15,11 @@ var resourcePatterns = [
   /conversion/gi,
   /adsrvr/gi,
   /fbds/gi,
-  /utag/gi,
 ]
 
 var webPage = require('webpage');
 var page = webPage.create();
-page.settings.resourceTimeout = 800;
+page.settings.resourceTimeout = 1000;
 page.onResourceTimeout = function(e) {
   console.log("Timeout: " + e.url);
 }
