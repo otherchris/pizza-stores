@@ -4,7 +4,7 @@ count = 0;
 out = "";
 ARGF.each do |line|
   if line.include? "RESET" then
-    File.open('zipcodes/retry',"w+"){ |file| file << line.match(/\d{5}/)[0] }
+    File.open('zipcodes/retry',"a+"){ |file| file << line.match(/\d{5}/)[0] }
   end
   if line.include? "STORE #" then
     count = 3;
